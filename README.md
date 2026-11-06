@@ -22,11 +22,23 @@ Gleiches Vorgehen: beide Dateien in den Themes-Ordner, dann in den Einstellungen
 Die wichtigsten Werte stehen ganz oben in der CSS-Datei:
 
 ```css
---sm64-bg-size: 68vmin;   /* Größe des Mario-Bildes */
---sm64-bg-opacity: 0.55;  /* Deckkraft des Bildes   */
+--sm64-bg: url("mario64-bg.png");   /* anderes Bild? hier eintragen */
+--sm64-bg-size: cover;              /* cover | contain | 68vmin   */
+--sm64-bg-position: center;         /* center | right center | …  */
+--sm64-bg-opacity: 0.55;            /* Deckkraft des Bildes       */
+
+/* Panels (halbtransparent, Bild scheint durch) */
+--sm64-panel: rgba(10, 10, 12, 0.62);
+--sm64-panel-strong: rgba(10, 10, 12, 0.80);
+
 --sm64-red: #e52521;
 --sm64-star: #fbd000;
 ```
+
+Das Bild liegt vollflächig hinter der ganzen App (`background-size: cover`,
+`background-attachment: fixed`). Darüber liegen ein roter Farbschleier und
+halbtransparente Panels – deshalb wirkt es wie im
+[Theme-Preview](https://gibbu.github.io/ThemePreview/) „leicht transparent“.
 
 ## Dateien
 
@@ -34,7 +46,7 @@ Die wichtigsten Werte stehen ganz oben in der CSS-Datei:
 |---|---|
 | `SuperMario64.theme.css` | das Theme |
 | `mario64-bg.png` | halbtransparentes Hintergrundbild |
-| `preview.html` | HTML-Vorschau (im Browser öffnen) |
+| `preview.html` + `preview.css` | HTML-Vorschau (im Browser öffnen) |
 | `preview.png` | Screenshot für dieses README |
 | `install.ps1` | kopiert Theme + Bild in den Vencord-Themes-Ordner (Windows) |
 
