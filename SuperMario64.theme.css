@@ -1,0 +1,451 @@
+/**
+ * @name Super Mario 64 — Rot & Schwarz
+ * @description Vencord/Discord-Theme im Super-Mario-64-Look: rot-schwarze Palette, halbtransparentes Mario-Bild im Hintergrund, gelbe Akzente (Message-Bar, Sterne, Buttons).
+ * @author AbacusAI Bot
+ * @version 2.0.0
+ * @source https://github.com/AbacusAI
+ */
+
+/* =========================================================
+   SUPER MARIO 64 — ROT / SCHWARZ  (Vencord / BetterDiscord)
+   ---------------------------------------------------------
+   WICHTIG: mario64-bg.png muss im SELBEN Ordner liegen wie
+   diese Theme-Datei (liegt bereits daneben).
+   Farben: Rot #e52521 · Schwarz #0a0a0c · Gelb #fbd000
+   ========================================================= */
+
+.theme-dark,
+.theme-light {
+    /* --- Grundflächen: tiefes Schwarz mit Rotstich --- */
+    --background-primary: #0a0a0c;
+    --background-secondary: #110709;
+    --background-secondary-alt: #07070a;
+    --background-tertiary: #050508;
+    --background-accent: #e52521;
+    --background-floating: #150a0c;
+    --background-modifier-hover: rgba(229, 37, 33, 0.16);
+    --background-modifier-active: rgba(229, 37, 33, 0.28);
+    --background-modifier-selected: rgba(229, 37, 33, 0.42);
+    --background-modifier-accent: rgba(251, 208, 0, 0.20);
+
+    --text-normal: #f7e9e9;
+    --text-muted: #b89595;
+    --text-link: #fbd000;
+    --header-primary: #fbd000;
+    --header-secondary: #d9a8a8;
+    --interactive-normal: #e8d5d5;
+    --interactive-hover: #fbd000;
+    --interactive-active: #ffffff;
+    --interactive-muted: #6b5050;
+
+    --channel-text-area-placeholder: #a88383;
+    --channel-icon: #d9a8a8;
+
+    --brand-experiment: #e52521;
+    --brand-experiment-560: #c41e1a;
+    --brand-experiment-600: #a81814;
+
+    --info-positive-text: #43b047;
+    --info-warning-text: #fbd000;
+    --info-danger-text: #ff5a56;
+
+    --sm64-font: "Trebuchet MS", "Verdana", "Segoe UI", sans-serif;
+    --sm64-red: #e52521;
+    --sm64-dark-red: #a81814;
+    --sm64-black: #0a0a0c;
+    --sm64-star: #fbd000;
+    --sm64-star-dark: #b38600;
+
+    /* Bildgröße im Hintergrund (anpassbar!) */
+    --sm64-bg-size: 68vmin;
+    --sm64-bg-opacity: 0.55;
+}
+
+body,
+.theme-dark,
+.theme-light {
+    font-family: var(--sm64-font);
+    letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   HINTERGRUND  —  Mario-Bild, halbtransparent
+   ========================================================= */
+#app-mount {
+    position: relative;
+    background:
+        radial-gradient(1100px 700px at 12% -10%, rgba(229, 37, 33, 0.28), transparent 62%),
+        radial-gradient(800px 500px at 92% 105%, rgba(229, 37, 33, 0.18), transparent 60%),
+        linear-gradient(160deg, #14060a 0%, #0a0a0c 45%, #050508 100%);
+}
+
+/* Mario-Bild als eigene Ebene über dem Verlauf, aber unter der UI */
+#app-mount::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("mario64-bg.png");
+    background-repeat: no-repeat;
+    background-position: right 6vw center;
+    background-size: var(--sm64-bg-size);
+    opacity: var(--sm64-bg-opacity);
+    filter: drop-shadow(0 0 40px rgba(229, 37, 33, 0.55));
+}
+
+/* Damit die UI über dem Bild liegt */
+#app-mount > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Feines Raster + Vignette über dem Bild, damit Text lesbar bleibt */
+#app-mount::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(251, 208, 0, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(251, 208, 0, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(5, 5, 8, 0.75) 100%);
+    background-size: 32px 32px, 32px 32px, 100% 100%;
+}
+
+/* Flächen halbtransparent, damit das Bild durchscheint */
+.theme-dark .chat_f75fb0,
+.theme-dark .container_fc4f04,
+.theme-dark .sidebar_c48ade,
+.theme-dark .members_c8ffbb {
+    background-color: rgba(10, 10, 12, 0.72);
+}
+
+/* =========================================================
+   SERVERLEISTE
+   ========================================================= */
+.theme-dark .guilds_c48ade {
+    background: linear-gradient(180deg, rgba(17, 7, 9, 0.92), rgba(5, 5, 8, 0.95));
+    border-right: 3px solid var(--sm64-red);
+    box-shadow: inset -6px 0 18px rgba(229, 37, 33, 0.14);
+}
+
+.theme-dark .listItem_c96c45 .wrapper__6e9f8 .childWrapper__6e9f8,
+.theme-dark .listItem_c96c45 .wrapper__6e9f8 .circleIconButton__5bc7e {
+    border: 2px solid transparent;
+    transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.theme-dark .listItem_c96c45 .wrapper__6e9f8:hover .childWrapper__6e9f8,
+.theme-dark .listItem_c96c45.selected_ae80f7 .childWrapper__6e9f8 {
+    border-color: var(--sm64-red);
+    box-shadow: 0 0 16px rgba(229, 37, 33, 0.75);
+    transform: translateY(-1px);
+}
+
+/* Aktiv-Punkt: gelber Stern-Akzent */
+.theme-dark .pill__5bc7e span[style*="height"] {
+    background: var(--sm64-star) !important;
+    box-shadow: 0 0 10px rgba(251, 208, 0, 0.9);
+}
+
+/* =========================================================
+   KANALLISTE
+   ========================================================= */
+.theme-dark .sidebar_c48ade {
+    border-right: 2px solid rgba(229, 37, 33, 0.35);
+}
+
+.theme-dark .container__551b0 .name__2ea32,
+.theme-dark .header__5a1a5 {
+    color: var(--sm64-star);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    font-size: 11px;
+    text-shadow: 1px 1px 0 #3a1a00;
+}
+
+.theme-dark .link__2ea32 {
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.theme-dark .link__2ea32:hover {
+    background: rgba(229, 37, 33, 0.16);
+    border-left-color: var(--sm64-red);
+}
+
+.theme-dark .modeSelected__2ea32 .link__2ea32 {
+    background: linear-gradient(90deg, rgba(229, 37, 33, 0.85), rgba(229, 37, 33, 0.12));
+    border-left-color: var(--sm64-star);
+    box-shadow: inset 0 0 18px rgba(255, 90, 86, 0.35);
+}
+
+.theme-dark .modeSelected__2ea32 .name__2ea32 {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.theme-dark .unread__2ea32 {
+    background: var(--sm64-star);
+    box-shadow: 0 0 8px rgba(251, 208, 0, 0.9);
+}
+
+/* =========================================================
+   CHAT-KOPF
+   ========================================================= */
+.theme-dark .title_f75fb0,
+.theme-dark .upperContainer__9293f {
+    background: linear-gradient(90deg, rgba(26, 8, 10, 0.95), rgba(10, 10, 12, 0.9));
+    border-bottom: 3px solid var(--sm64-red);
+}
+
+.theme-dark .title_f75fb0 h1,
+.theme-dark .title_f75fb0 .channelName__2ea32 {
+    color: var(--sm64-star);
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    text-shadow: 2px 2px 0 #3a1a00;
+}
+
+/* =========================================================
+   NACHRICHTEN  —  die gelbe Message-Bar bleibt!
+   ========================================================= */
+.theme-dark .message__5126c {
+    border-left: 3px solid transparent;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.theme-dark .message__5126c:hover {
+    background: rgba(251, 208, 0, 0.10);
+    border-left-color: var(--sm64-star);
+    box-shadow: inset 0 0 24px rgba(251, 208, 0, 0.07);
+}
+
+/* Erwähnt: gelber Balken links + Stern */
+.theme-dark .message__5126c.mentioned__5126c {
+    background: linear-gradient(90deg, rgba(251, 208, 0, 0.16), rgba(251, 208, 0, 0.03));
+    border-left: 4px solid var(--sm64-star);
+}
+
+.theme-dark .message__5126c.mentioned__5126c::before {
+    content: "★";
+    position: absolute;
+    left: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sm64-star);
+    font-size: 14px;
+    text-shadow: 0 0 8px rgba(251, 208, 0, 0.9);
+}
+
+/* Gelbe Trenner zwischen Nachrichtengruppen */
+.theme-dark .group-spacing {
+    border-top: 1px solid rgba(251, 208, 0, 0.12);
+}
+
+.theme-dark .message__5126c .username__81ee8 {
+    font-weight: 800;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.theme-dark .timestamp__81ee8 {
+    color: #b89595;
+}
+
+.theme-dark .messageContent__21e69 a,
+.theme-dark .anchor_b3d8d4 {
+    color: var(--sm64-star);
+    text-decoration: underline dotted;
+}
+
+/* Antwort-Balken in Gelb */
+.theme-dark .repliedMessage__5126c::before {
+    background: var(--sm64-star) !important;
+    opacity: 0.55;
+}
+
+/* =========================================================
+   EINGABEZEILE  —  ? Block in Gelb
+   ========================================================= */
+.theme-dark .channelTextArea__74017,
+.theme-dark .scrollableContainer__74017 {
+    background: #f7c900;
+    border: 4px solid #8a2b12;
+    border-radius: 10px;
+    box-shadow:
+        inset 0 4px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -6px 0 rgba(0, 0, 0, 0.22),
+        0 6px 0 #4a1408,
+        0 0 26px rgba(251, 208, 0, 0.40);
+}
+
+.theme-dark .textArea__74017,
+.theme-dark .placeholder__1b31f {
+    color: #241000;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.theme-dark .placeholder__1b31f::after {
+    content: " ★";
+    color: var(--sm64-dark-red);
+}
+
+.theme-dark .buttons__74017 .button__74017 {
+    color: var(--sm64-red);
+    transition: transform 100ms ease;
+}
+
+.theme-dark .buttons__74017 .button__74017:hover {
+    color: #7a100c;
+    transform: translateY(-1px) scale(1.06);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.theme-dark .lookFilled__201d5.colorBrand__201d5,
+.theme-dark .lookFilled__201d5.colorPrimary__201d5 {
+    background: linear-gradient(180deg, #ff4a45, #e52521);
+    border: 2px solid #ffb0ae;
+    border-bottom-width: 4px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    transition: transform 100ms ease, box-shadow 100ms ease;
+}
+
+.theme-dark .lookFilled__201d5.colorBrand__201d5:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(229, 37, 33, 0.8);
+}
+
+/* Gelbe Sonder-Buttons (z. B. Boost / Speichern) */
+.theme-dark .lookFilled__201d5.colorGreen__201d5 {
+    background: linear-gradient(180deg, #fde047, #f7c900);
+    border-color: #fff3b0;
+    color: #241000;
+    text-shadow: none;
+}
+
+.theme-dark .lookFilled__201d5.colorRed__201d5 {
+    background: linear-gradient(180deg, #ff5a56, #a81814);
+    border-color: #ffb0ae;
+}
+
+/* =========================================================
+   MITGLIEDERLISTE
+   ========================================================= */
+.theme-dark .members_c8ffbb {
+    border-left: 2px solid rgba(229, 37, 33, 0.30);
+}
+
+.theme-dark .member__5d473:hover {
+    background: rgba(229, 37, 33, 0.16);
+    border-radius: 6px;
+}
+
+/* =========================================================
+   POPOUTS / MODALS
+   ========================================================= */
+.theme-dark .root__49fc1,
+.theme-dark .popout__76f04,
+.theme-dark .menu__5be41 {
+    background: linear-gradient(180deg, rgba(26, 8, 10, 0.98), rgba(7, 7, 10, 0.99));
+    border: 3px solid var(--sm64-red);
+    border-radius: 12px;
+    box-shadow:
+        0 0 0 4px #050508,
+        0 12px 40px rgba(0, 0, 0, 0.85),
+        0 0 30px rgba(229, 37, 33, 0.30);
+}
+
+.theme-dark .header__49fc1 {
+    background: linear-gradient(90deg, #e52521, #4a1408);
+    border-bottom: 3px solid var(--sm64-star);
+    border-radius: 9px 9px 0 0;
+}
+
+.theme-dark .item__5be41 {
+    border-radius: 6px;
+    color: #f7e9e9;
+    font-weight: 600;
+}
+
+.theme-dark .item__5be41:hover {
+    background: var(--sm64-red);
+    color: #fff;
+}
+
+.theme-dark .item__5be41.colorDanger__5be41 {
+    color: #ff8a87;
+}
+
+.theme-dark .item__5be41.colorDanger__5be41:hover {
+    background: #a81814;
+    color: #fff;
+}
+
+/* =========================================================
+   SCROLLBAR  —  rot mit gelbem Griff
+   ========================================================= */
+.theme-dark ::-webkit-scrollbar {
+    width: 12px;
+}
+
+.theme-dark ::-webkit-scrollbar-track {
+    background: #050508;
+    border-left: 2px solid rgba(229, 37, 33, 0.30);
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #fde047, #b38600);
+    border: 2px solid #050508;
+    border-radius: 8px;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffe97a, #d19f00);
+    box-shadow: 0 0 10px rgba(251, 208, 0, 0.9);
+}
+
+/* =========================================================
+   KLEINE EXTRAS
+   ========================================================= */
+.theme-dark .avatar__20a53,
+.theme-dark .avatarWrapper__37e49 {
+    filter: drop-shadow(0 0 6px rgba(229, 37, 33, 0.55));
+}
+
+.theme-dark .container__37e49 {
+    background: linear-gradient(180deg, rgba(26, 8, 10, 0.95), rgba(5, 5, 8, 0.98));
+}
+
+.theme-dark .footer_c48ade {
+    border-top: 2px solid rgba(229, 37, 33, 0.30);
+}
+
+.theme-dark .tooltip__7ee71,
+.theme-dark .tooltipPrimary__7ee71 {
+    background: #150a0c;
+    border: 2px solid var(--sm64-star);
+    color: #f7e9e9;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+::selection {
+    background: var(--sm64-star);
+    color: #241000;
+}
+
+.theme-dark .container_a1c2b0 {
+    background: #050508;
+}
