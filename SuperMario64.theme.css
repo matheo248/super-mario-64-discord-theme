@@ -1,64 +1,77 @@
 /**
  * @name Super Mario 64 — Rot & Schwarz
- * @description Vencord/Discord-Theme im Super-Mario-64-Look: rot-schwarze Palette, halbtransparentes Mario-Bild im Hintergrund, gelbe Akzente (Message-Bar, Sterne, Buttons).
+ * @description Vencord/Discord-Theme im Super-Mario-64-Look: rot-schwarze Palette, Mario-Bild als vollflächiger Hintergrund (halbtransparente Panels, wie im Theme-Preview), gelbe Akzente (Message-Bar, Sterne, Eingabezeile).
  * @author AbacusAI Bot
- * @version 2.0.0
- * @source https://github.com/AbacusAI
+ * @version 3.0.0
+ * @source https://github.com/matheo248/super-mario-64-discord-theme
  */
 
 /* =========================================================
    SUPER MARIO 64 — ROT / SCHWARZ  (Vencord / BetterDiscord)
    ---------------------------------------------------------
-   WICHTIG: mario64-bg.png muss im SELBEN Ordner liegen wie
-   diese Theme-Datei (liegt bereits daneben).
+   HINTERGRUNDBILD: liegt als  mario64-bg.png  neben dieser
+   Theme-Datei und wird relativ geladen – beide Dateien
+   müssen zusammen im Themes-Ordner bleiben.
    Farben: Rot #e52521 · Schwarz #0a0a0c · Gelb #fbd000
    ========================================================= */
 
+/* =========================================================
+   EINSTELLUNGEN  —  hier anpassen
+   ========================================================= */
+:root {
+    /* Bild */
+    --sm64-bg: url("mario64-bg.png");
+    --sm64-bg-opacity: 0.55;      /* Deckkraft des Bildes         */
+    --sm64-bg-size: cover;        /* cover | contain | 68vmin    */
+    --sm64-bg-position: center;   /* center | right center | ...  */
+    --sm64-bg-attachment: fixed;  /* fixed = Bild bleibt stehen   */
+
+    /* Panels (halbtransparent, damit das Bild durchscheint) */
+    --sm64-panel: rgba(10, 10, 12, 0.62);
+    --sm64-panel-strong: rgba(10, 10, 12, 0.80);
+    --sm64-panel-light: rgba(26, 8, 10, 0.55);
+
+    /* Farben */
+    --sm64-red: #e52521;
+    --sm64-dark-red: #a81814;
+    --sm64-star: #fbd000;
+    --sm64-star-dark: #b38600;
+    --sm64-font: "Trebuchet MS", "Verdana", "Segoe UI", sans-serif;
+}
+
 .theme-dark,
 .theme-light {
-    /* --- Grundflächen: tiefes Schwarz mit Rotstich --- */
-    --background-primary: #0a0a0c;
-    --background-secondary: #110709;
-    --background-secondary-alt: #07070a;
-    --background-tertiary: #050508;
-    --background-accent: #e52521;
-    --background-floating: #150a0c;
-    --background-modifier-hover: rgba(229, 37, 33, 0.16);
-    --background-modifier-active: rgba(229, 37, 33, 0.28);
-    --background-modifier-selected: rgba(229, 37, 33, 0.42);
-    --background-modifier-accent: rgba(251, 208, 0, 0.20);
+    --background-primary: rgba(10, 10, 12, 0.62);
+    --background-secondary: rgba(17, 7, 9, 0.66);
+    --background-secondary-alt: rgba(7, 7, 10, 0.70);
+    --background-tertiary: rgba(5, 5, 8, 0.72);
+    --background-accent: var(--sm64-red);
+    --background-floating: rgba(21, 10, 12, 0.92);
+    --background-modifier-hover: rgba(229, 37, 33, 0.18);
+    --background-modifier-active: rgba(229, 37, 33, 0.30);
+    --background-modifier-selected: rgba(229, 37, 33, 0.45);
+    --background-modifier-accent: rgba(251, 208, 0, 0.22);
 
     --text-normal: #f7e9e9;
-    --text-muted: #b89595;
-    --text-link: #fbd000;
-    --header-primary: #fbd000;
-    --header-secondary: #d9a8a8;
+    --text-muted: #c9a9a9;
+    --text-link: var(--sm64-star);
+    --header-primary: var(--sm64-star);
+    --header-secondary: #e0b6b6;
     --interactive-normal: #e8d5d5;
-    --interactive-hover: #fbd000;
+    --interactive-hover: var(--sm64-star);
     --interactive-active: #ffffff;
     --interactive-muted: #6b5050;
 
     --channel-text-area-placeholder: #a88383;
-    --channel-icon: #d9a8a8;
+    --channel-icon: #e0b6b6;
 
-    --brand-experiment: #e52521;
+    --brand-experiment: var(--sm64-red);
     --brand-experiment-560: #c41e1a;
-    --brand-experiment-600: #a81814;
+    --brand-experiment-600: var(--sm64-dark-red);
 
     --info-positive-text: #43b047;
-    --info-warning-text: #fbd000;
+    --info-warning-text: var(--sm64-star);
     --info-danger-text: #ff5a56;
-
-    --sm64-font: "Trebuchet MS", "Verdana", "Segoe UI", sans-serif;
-    --sm64-red: #e52521;
-    --sm64-dark-red: #a81814;
-    --sm64-black: #0a0a0c;
-    --sm64-star: #fbd000;
-    --sm64-star-dark: #b38600;
-
-    /* Bildgröße im Hintergrund (anpassbar!) */
-    --sm64-bg-size: 68vmin;
-    --sm64-bg-opacity: 0.55;
 }
 
 body,
@@ -69,38 +82,32 @@ body,
 }
 
 /* =========================================================
-   HINTERGRUND  —  Mario-Bild, halbtransparent
+   1) VOLLFLÄCHIGER BILD-HINTERGRUND
    ========================================================= */
 #app-mount {
-    position: relative;
-    background:
-        radial-gradient(1100px 700px at 12% -10%, rgba(229, 37, 33, 0.28), transparent 62%),
-        radial-gradient(800px 500px at 92% 105%, rgba(229, 37, 33, 0.18), transparent 60%),
-        linear-gradient(160deg, #14060a 0%, #0a0a0c 45%, #050508 100%);
+    background-color: #0a0a0c;
+    background-image: var(--sm64-bg);
+    background-repeat: no-repeat;
+    background-position: var(--sm64-bg-position);
+    background-size: var(--sm64-bg-size);
+    background-attachment: var(--sm64-bg-attachment);
 }
 
-/* Mario-Bild als eigene Ebene über dem Verlauf, aber unter der UI */
+/* Roter Farbschleier + Abdunklung ÜBER dem Bild, damit es
+   „leicht transparent“ wirkt und Text lesbar bleibt         */
 #app-mount::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background-image: url("mario64-bg.png");
-    background-repeat: no-repeat;
-    background-position: right 6vw center;
-    background-size: var(--sm64-bg-size);
-    opacity: var(--sm64-bg-opacity);
-    filter: drop-shadow(0 0 40px rgba(229, 37, 33, 0.55));
+    background:
+        radial-gradient(1100px 700px at 12% -10%, rgba(229, 37, 33, 0.34), transparent 62%),
+        radial-gradient(800px 500px at 92% 105%, rgba(229, 37, 33, 0.22), transparent 60%),
+        linear-gradient(160deg, rgba(20, 6, 10, 0.55) 0%, rgba(10, 10, 12, 0.62) 45%, rgba(5, 5, 8, 0.78) 100%);
 }
 
-/* Damit die UI über dem Bild liegt */
-#app-mount > * {
-    position: relative;
-    z-index: 1;
-}
-
-/* Feines Raster + Vignette über dem Bild, damit Text lesbar bleibt */
+/* Feines Raster + Vignette */
 #app-mount::after {
     content: "";
     position: absolute;
@@ -108,57 +115,98 @@ body,
     z-index: 0;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(251, 208, 0, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(251, 208, 0, 0.035) 1px, transparent 1px),
-        radial-gradient(circle at 50% 50%, transparent 45%, rgba(5, 5, 8, 0.75) 100%);
+        linear-gradient(rgba(251, 208, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(251, 208, 0, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(5, 5, 8, 0.65) 100%);
     background-size: 32px 32px, 32px 32px, 100% 100%;
 }
 
-/* Flächen halbtransparent, damit das Bild durchscheint */
-.theme-dark .chat_f75fb0,
-.theme-dark .container_fc4f04,
-.theme-dark .sidebar_c48ade,
-.theme-dark .members_c8ffbb {
-    background-color: rgba(10, 10, 12, 0.72);
+/* UI-Ebene über Bild und Schleier */
+#app-mount > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Der eingebaute Discord-Hintergrund muss weg, sonst deckt er das Bild zu */
+#app-mount .bg__960e4,
+#app-mount .app__160d8,
+#app-mount .app_a3002d,
+#app-mount .container__2637a,
+#app-mount .base__5e434 {
+    background: transparent !important;
 }
 
 /* =========================================================
-   SERVERLEISTE
+   2) ALLE GROSSEN FLÄCHEN TRANSPARENT  (Bild scheint durch)
    ========================================================= */
-.theme-dark .guilds_c48ade {
-    background: linear-gradient(180deg, rgba(17, 7, 9, 0.92), rgba(5, 5, 8, 0.95));
-    border-right: 3px solid var(--sm64-red);
-    box-shadow: inset -6px 0 18px rgba(229, 37, 33, 0.14);
+#app-mount .chat_f75fb0,
+#app-mount .chatContent_f75fb0,
+#app-mount .chatContent_f75fb0 .wrapper_d852db,
+#app-mount .chatContent_f75fb0 .wrapper_fc8177,
+#app-mount .channelChatWrapper_cb9592,
+#app-mount .container_fc4f04,
+#app-mount .page__5e434,
+#app-mount .container__133bf,
+#app-mount .container__133bf .container__9293f,
+#app-mount .container__133bf .tabBody__133bf,
+#app-mount .container__133bf .nowPlayingColumn__133bf,
+#app-mount .peopleColumn__133bf,
+#app-mount .applicationStore_f07d62,
+#app-mount .homeWrapperNormal__0920e,
+#app-mount .scroller__23746 {
+    background: transparent !important;
 }
 
-.theme-dark .listItem_c96c45 .wrapper__6e9f8 .childWrapper__6e9f8,
-.theme-dark .listItem_c96c45 .wrapper__6e9f8 .circleIconButton__5bc7e {
+/* Panels: halbtransparent statt deckend */
+#app-mount .sidebar_c48ade,
+#app-mount .members_c8ffbb,
+#app-mount .membersWrap_c8ffbb {
+    background-color: var(--sm64-panel) !important;
+    backdrop-filter: blur(3px);
+}
+
+#app-mount .sidebar_c48ade {
+    border-right: 2px solid rgba(229, 37, 33, 0.35);
+}
+
+#app-mount .members_c8ffbb {
+    border-left: 2px solid rgba(229, 37, 33, 0.30);
+}
+
+/* =========================================================
+   3) SERVERLEISTE
+   ========================================================= */
+#app-mount .guilds_c48ade,
+#app-mount .wrapper_ef3116.guilds__5e434 {
+    background: linear-gradient(180deg, rgba(17, 7, 9, 0.72), rgba(5, 5, 8, 0.82)) !important;
+    border-right: 3px solid var(--sm64-red);
+    box-shadow: inset -6px 0 18px rgba(229, 37, 33, 0.16);
+}
+
+#app-mount .listItem_c96c45 .wrapper__6e9f8 .childWrapper__6e9f8,
+#app-mount .listItem_c96c45 .wrapper__6e9f8 .circleIconButton__5bc7e {
+    background-color: rgba(42, 18, 21, 0.85);
     border: 2px solid transparent;
     transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
 
-.theme-dark .listItem_c96c45 .wrapper__6e9f8:hover .childWrapper__6e9f8,
-.theme-dark .listItem_c96c45.selected_ae80f7 .childWrapper__6e9f8 {
+#app-mount .listItem_c96c45 .wrapper__6e9f8:hover .childWrapper__6e9f8,
+#app-mount .listItem_c96c45.selected_ae80f7 .childWrapper__6e9f8 {
     border-color: var(--sm64-red);
     box-shadow: 0 0 16px rgba(229, 37, 33, 0.75);
     transform: translateY(-1px);
 }
 
-/* Aktiv-Punkt: gelber Stern-Akzent */
-.theme-dark .pill__5bc7e span[style*="height"] {
+#app-mount .pill__5bc7e span[style*="height"] {
     background: var(--sm64-star) !important;
     box-shadow: 0 0 10px rgba(251, 208, 0, 0.9);
 }
 
 /* =========================================================
-   KANALLISTE
+   4) KANALLISTE
    ========================================================= */
-.theme-dark .sidebar_c48ade {
-    border-right: 2px solid rgba(229, 37, 33, 0.35);
-}
-
-.theme-dark .container__551b0 .name__2ea32,
-.theme-dark .header__5a1a5 {
+#app-mount .container__551b0 .name__2ea32,
+#app-mount .header__5a1a5 {
     color: var(--sm64-star);
     font-weight: 800;
     text-transform: uppercase;
@@ -167,44 +215,53 @@ body,
     text-shadow: 1px 1px 0 #3a1a00;
 }
 
-.theme-dark .link__2ea32 {
+#app-mount .link__2ea32 {
     border-radius: 6px;
     border-left: 3px solid transparent;
     transition: background 120ms ease, border-color 120ms ease;
 }
 
-.theme-dark .link__2ea32:hover {
-    background: rgba(229, 37, 33, 0.16);
+#app-mount .link__2ea32:hover {
+    background: rgba(229, 37, 33, 0.22);
     border-left-color: var(--sm64-red);
 }
 
-.theme-dark .modeSelected__2ea32 .link__2ea32 {
-    background: linear-gradient(90deg, rgba(229, 37, 33, 0.85), rgba(229, 37, 33, 0.12));
+#app-mount .modeSelected__2ea32 .link__2ea32,
+#app-mount .containerDefault_c69b6d.selected_c69b6d .wrapper__2ea32 {
+    background: linear-gradient(90deg, rgba(229, 37, 33, 0.88), rgba(229, 37, 33, 0.18)) !important;
     border-left-color: var(--sm64-star);
     box-shadow: inset 0 0 18px rgba(255, 90, 86, 0.35);
 }
 
-.theme-dark .modeSelected__2ea32 .name__2ea32 {
+#app-mount .modeSelected__2ea32 .name__2ea32 {
     color: #ffffff;
     font-weight: 700;
 }
 
-.theme-dark .unread__2ea32 {
+#app-mount .unread__2ea32 {
     background: var(--sm64-star);
     box-shadow: 0 0 8px rgba(251, 208, 0, 0.9);
 }
 
+/* Panels unten (eigener Name / Voice) */
+#app-mount .panels_c48ade,
+#app-mount .container__37e49 {
+    background: linear-gradient(180deg, rgba(26, 8, 10, 0.72), rgba(5, 5, 8, 0.82));
+    border-top: 2px solid rgba(229, 37, 33, 0.35);
+}
+
 /* =========================================================
-   CHAT-KOPF
+   5) CHAT-KOPF
    ========================================================= */
-.theme-dark .title_f75fb0,
-.theme-dark .upperContainer__9293f {
-    background: linear-gradient(90deg, rgba(26, 8, 10, 0.95), rgba(10, 10, 12, 0.9));
+#app-mount .title_f75fb0,
+#app-mount .upperContainer__9293f,
+#app-mount .header__0b91c {
+    background: linear-gradient(90deg, rgba(26, 8, 10, 0.80), rgba(10, 10, 12, 0.72)) !important;
     border-bottom: 3px solid var(--sm64-red);
 }
 
-.theme-dark .title_f75fb0 h1,
-.theme-dark .title_f75fb0 .channelName__2ea32 {
+#app-mount .title_f75fb0 h1,
+#app-mount .title_f75fb0 .channelName__2ea32 {
     color: var(--sm64-star);
     font-weight: 900;
     letter-spacing: 0.6px;
@@ -212,29 +269,35 @@ body,
 }
 
 /* =========================================================
-   NACHRICHTEN  —  die gelbe Message-Bar bleibt!
+   6) NACHRICHTEN  —  gelbe Message-Bar bleibt
    ========================================================= */
-.theme-dark .message__5126c {
+#app-mount .message__5126c {
     border-left: 3px solid transparent;
     transition: background 120ms ease, border-color 120ms ease;
 }
 
-.theme-dark .message__5126c:hover {
-    background: rgba(251, 208, 0, 0.10);
+#app-mount .message__5126c:hover {
+    background: rgba(251, 208, 0, 0.12);
     border-left-color: var(--sm64-star);
-    box-shadow: inset 0 0 24px rgba(251, 208, 0, 0.07);
+    box-shadow: inset 0 0 24px rgba(251, 208, 0, 0.08);
 }
 
 /* Erwähnt: gelber Balken links + Stern */
-.theme-dark .message__5126c.mentioned__5126c {
-    background: linear-gradient(90deg, rgba(251, 208, 0, 0.16), rgba(251, 208, 0, 0.03));
+#app-mount .message__5126c.mentioned__5126c,
+#app-mount .mentioned__5126c {
+    background: linear-gradient(90deg, rgba(251, 208, 0, 0.20), rgba(251, 208, 0, 0.05)) !important;
     border-left: 4px solid var(--sm64-star);
 }
 
-.theme-dark .message__5126c.mentioned__5126c::before {
+#app-mount .mentioned__5126c::before {
+    background: var(--sm64-star) !important;
+    width: 4px;
+}
+
+#app-mount .message__5126c.mentioned__5126c::after {
     content: "★";
     position: absolute;
-    left: 1px;
+    left: 2px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--sm64-star);
@@ -243,37 +306,41 @@ body,
 }
 
 /* Gelbe Trenner zwischen Nachrichtengruppen */
-.theme-dark .group-spacing {
-    border-top: 1px solid rgba(251, 208, 0, 0.12);
+#app-mount .group-spacing {
+    border-top: 1px solid rgba(251, 208, 0, 0.14);
 }
 
-.theme-dark .message__5126c .username__81ee8 {
+#app-mount .message__5126c .username__81ee8 {
     font-weight: 800;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 
-.theme-dark .timestamp__81ee8 {
-    color: #b89595;
+#app-mount .timestamp__81ee8 {
+    color: #c9a9a9;
 }
 
-.theme-dark .messageContent__21e69 a,
-.theme-dark .anchor_b3d8d4 {
+#app-mount .messageContent__21e69 a,
+#app-mount .anchor_b3d8d4,
+#app-mount a[target="_blank"] {
     color: var(--sm64-star);
     text-decoration: underline dotted;
 }
 
-/* Antwort-Balken in Gelb */
-.theme-dark .repliedMessage__5126c::before {
+#app-mount .repliedMessage__5126c::before {
     background: var(--sm64-star) !important;
-    opacity: 0.55;
+    opacity: 0.6;
+}
+
+#app-mount .newMessagesBar__0f481 {
+    background-color: var(--sm64-red) !important;
 }
 
 /* =========================================================
-   EINGABEZEILE  —  ? Block in Gelb
+   7) EINGABEZEILE  —  ? Block in Gelb
    ========================================================= */
-.theme-dark .channelTextArea__74017,
-.theme-dark .scrollableContainer__74017 {
-    background: #f7c900;
+#app-mount .channelTextArea__74017,
+#app-mount .scrollableContainer__74017 {
+    background: #f7c900 !important;
     border: 4px solid #8a2b12;
     border-radius: 10px;
     box-shadow:
@@ -283,33 +350,33 @@ body,
         0 0 26px rgba(251, 208, 0, 0.40);
 }
 
-.theme-dark .textArea__74017,
-.theme-dark .placeholder__1b31f {
-    color: #241000;
+#app-mount .textArea__74017,
+#app-mount .placeholder__1b31f {
+    color: #241000 !important;
     font-weight: 700;
     font-size: 15px;
 }
 
-.theme-dark .placeholder__1b31f::after {
+#app-mount .placeholder__1b31f::after {
     content: " ★";
     color: var(--sm64-dark-red);
 }
 
-.theme-dark .buttons__74017 .button__74017 {
+#app-mount .buttons__74017 .button__74017 {
     color: var(--sm64-red);
     transition: transform 100ms ease;
 }
 
-.theme-dark .buttons__74017 .button__74017:hover {
+#app-mount .buttons__74017 .button__74017:hover {
     color: #7a100c;
     transform: translateY(-1px) scale(1.06);
 }
 
 /* =========================================================
-   BUTTONS
+   8) BUTTONS
    ========================================================= */
-.theme-dark .lookFilled__201d5.colorBrand__201d5,
-.theme-dark .lookFilled__201d5.colorPrimary__201d5 {
+#app-mount .lookFilled__201d5.colorBrand__201d5,
+#app-mount .lookFilled__201d5.colorPrimary__201d5 {
     background: linear-gradient(180deg, #ff4a45, #e52521);
     border: 2px solid #ffb0ae;
     border-bottom-width: 4px;
@@ -322,119 +389,115 @@ body,
     transition: transform 100ms ease, box-shadow 100ms ease;
 }
 
-.theme-dark .lookFilled__201d5.colorBrand__201d5:hover {
+#app-mount .lookFilled__201d5.colorBrand__201d5:hover {
     transform: translateY(-1px);
     box-shadow: 0 0 18px rgba(229, 37, 33, 0.8);
 }
 
-/* Gelbe Sonder-Buttons (z. B. Boost / Speichern) */
-.theme-dark .lookFilled__201d5.colorGreen__201d5 {
+#app-mount .lookFilled__201d5.colorGreen__201d5 {
     background: linear-gradient(180deg, #fde047, #f7c900);
     border-color: #fff3b0;
     color: #241000;
     text-shadow: none;
 }
 
-.theme-dark .lookFilled__201d5.colorRed__201d5 {
+#app-mount .lookFilled__201d5.colorRed__201d5 {
     background: linear-gradient(180deg, #ff5a56, #a81814);
     border-color: #ffb0ae;
 }
 
 /* =========================================================
-   MITGLIEDERLISTE
+   9) MITGLIEDERLISTE
    ========================================================= */
-.theme-dark .members_c8ffbb {
-    border-left: 2px solid rgba(229, 37, 33, 0.30);
-}
-
-.theme-dark .member__5d473:hover {
-    background: rgba(229, 37, 33, 0.16);
+#app-mount .member__5d473:hover {
+    background: rgba(229, 37, 33, 0.20);
     border-radius: 6px;
 }
 
 /* =========================================================
-   POPOUTS / MODALS
+   10) POPOUTS / MODALS / MENÜS
    ========================================================= */
-.theme-dark .root__49fc1,
-.theme-dark .popout__76f04,
-.theme-dark .menu__5be41 {
-    background: linear-gradient(180deg, rgba(26, 8, 10, 0.98), rgba(7, 7, 10, 0.99));
+#app-mount .root__49fc1,
+#app-mount .popout__76f04,
+#app-mount .menu__5be41,
+#app-mount .container__55c99,
+#app-mount .container__55c99 ul,
+#app-mount .contentWrapper__08434 {
+    background: linear-gradient(180deg, rgba(26, 8, 10, 0.96), rgba(7, 7, 10, 0.97)) !important;
     border: 3px solid var(--sm64-red);
     border-radius: 12px;
     box-shadow:
-        0 0 0 4px #050508,
+        0 0 0 4px rgba(5, 5, 8, 0.9),
         0 12px 40px rgba(0, 0, 0, 0.85),
         0 0 30px rgba(229, 37, 33, 0.30);
 }
 
-.theme-dark .header__49fc1 {
-    background: linear-gradient(90deg, #e52521, #4a1408);
+#app-mount .header__49fc1 {
+    background: linear-gradient(90deg, #e52521, #4a1408) !important;
     border-bottom: 3px solid var(--sm64-star);
     border-radius: 9px 9px 0 0;
 }
 
-.theme-dark .item__5be41 {
+#app-mount .item__5be41 {
     border-radius: 6px;
     color: #f7e9e9;
     font-weight: 600;
 }
 
-.theme-dark .item__5be41:hover {
+#app-mount .item__5be41:hover {
     background: var(--sm64-red);
     color: #fff;
 }
 
-.theme-dark .item__5be41.colorDanger__5be41 {
+#app-mount .item__5be41.colorDanger__5be41 {
     color: #ff8a87;
 }
 
-.theme-dark .item__5be41.colorDanger__5be41:hover {
-    background: #a81814;
+#app-mount .item__5be41.colorDanger__5be41:hover {
+    background: var(--sm64-dark-red);
     color: #fff;
 }
 
+/* User-Popout */
+#app-mount .outer_c0bea0:not(.custom-theme-background),
+#app-mount .outer_c0bea0:not(.custom-theme-background) .inner_c0bea0 {
+    background-color: rgba(26, 8, 10, 0.92) !important;
+}
+
 /* =========================================================
-   SCROLLBAR  —  rot mit gelbem Griff
+   11) SCROLLBAR  —  rot mit gelbem Griff
    ========================================================= */
-.theme-dark ::-webkit-scrollbar {
+#app-mount ::-webkit-scrollbar {
     width: 12px;
 }
 
-.theme-dark ::-webkit-scrollbar-track {
-    background: #050508;
+#app-mount ::-webkit-scrollbar-track {
+    background: rgba(5, 5, 8, 0.65);
     border-left: 2px solid rgba(229, 37, 33, 0.30);
 }
 
-.theme-dark ::-webkit-scrollbar-thumb {
+#app-mount ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #fde047, #b38600);
     border: 2px solid #050508;
     border-radius: 8px;
 }
 
-.theme-dark ::-webkit-scrollbar-thumb:hover {
+#app-mount ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #ffe97a, #d19f00);
     box-shadow: 0 0 10px rgba(251, 208, 0, 0.9);
 }
 
 /* =========================================================
-   KLEINE EXTRAS
+   12) KLEINE EXTRAS
    ========================================================= */
-.theme-dark .avatar__20a53,
-.theme-dark .avatarWrapper__37e49 {
+#app-mount .avatar__20a53,
+#app-mount .avatarWrapper__37e49 {
     filter: drop-shadow(0 0 6px rgba(229, 37, 33, 0.55));
 }
 
-.theme-dark .container__37e49 {
-    background: linear-gradient(180deg, rgba(26, 8, 10, 0.95), rgba(5, 5, 8, 0.98));
-}
-
-.theme-dark .footer_c48ade {
-    border-top: 2px solid rgba(229, 37, 33, 0.30);
-}
-
-.theme-dark .tooltip__7ee71,
-.theme-dark .tooltipPrimary__7ee71 {
-    background: #150a0c;
+#app-mount .tooltip__7ee71,
+#app-mount .tooltipPrimary__7ee71 {
+    background: rgba(21, 10, 12, 0.96) !important;
     border: 2px solid var(--sm64-star);
     color: #f7e9e9;
     font-weight: 700;
@@ -446,6 +509,6 @@ body,
     color: #241000;
 }
 
-.theme-dark .container_a1c2b0 {
+#app-mount .container_a1c2b0 {
     background: #050508;
 }
